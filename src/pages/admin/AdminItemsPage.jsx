@@ -1,13 +1,15 @@
 import {
   Alert, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead,
-  TableRow, TextField, Typography,
+  TableRow, Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   useCreateAdminItemMutation, useDeleteAdminItemMutation, useGetAdminItemsQuery,
   useUpdateAdminItemMutation,
 } from "../../api/adminApi";
 import FormCard from "../../components/FormCard";
+import FormTextField from "../../components/FormTextField";
 import { getErrorMessage } from "../../utils/errors";
 import { formatPrice } from "../../utils/format";
 
@@ -19,19 +21,16 @@ export default function AdminItemsPage() {
   const [updateItem] = useUpdateAdminItemMutation();
   const [deleteItem] = useDeleteAdminItemMutation();
 
-  const [form, setForm] = useState(EMPTY_FORM);
+  const { control, handleSubmit, reset } = useForm({ defaultValues: EMPTY_FORM });
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState("");
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
   const resetForm = () => {
-    setForm(EMPTY_FORM);
+    reset(EMPTY_FORM);
     setEditingId(null);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (form) => {
     setError("");
     try {
       if (editingId) await updateItem({ id: editingId, ...form }).unwrap();
@@ -44,7 +43,7 @@ export default function AdminItemsPage() {
 
   const handleEdit = (item) => {
     setEditingId(item.id);
-    setForm({ name: item.name, description: item.description || "", price: item.price });
+    reset({ name: item.name, description: item.description || "", price: item.price });
   };
 
   const handleDelete = async (id) => {
@@ -65,13 +64,31 @@ export default function AdminItemsPage() {
       <FormCard
         title={editingId ? `Редагування #${editingId}` : "Новий товар"}
         error={error}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
       >
-        <TextField name="name" label="Назва" value={form.name} onChange={handleChange} required />
-        <TextField name="description" label="Опис" value={form.description} onChange={handleChange} multiline minRows={2} />
-        <TextField
-          name="price" type="number" label="Ціна" value={form.price} onChange={handleChange}
-          slotProps={{ htmlInput: { step: "0.01", min: 0 } }} required
+        <FormTextField
+          control={control}
+          name="name"
+          label="Назва"
+          rules={{ required: "Введіть назву товару" }}
+        />
+        <FormTextField
+          control={control}
+          name="description"
+          label="Опис"
+          multiline
+          minRows={2}
+        />
+        <FormTextField
+          control={control}
+          name="price"
+          type="number"
+          label="Ціна"
+          slotProps={{ htmlInput: { step: "0.01", min: 0 } }}
+          rules={{
+            required: "Введіть ціну",
+            min: { value: 0, message: "Ціна не може бути від'ємною" },
+          }}
         />
         <Stack direction="row" spacing={1}>
           <Button type="submit" variant="contained">{editingId ? "Зберегти" : "Створити"}</Button>

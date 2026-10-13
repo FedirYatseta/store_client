@@ -1,13 +1,15 @@
 import {
   Alert, Button, MenuItem, Paper, Stack, Table, TableBody, TableCell, TableContainer,
-  TableHead, TableRow, TextField, Typography,
+  TableHead, TableRow, Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import {
   useDeleteAdminUserMutation, useGetAdminUsersQuery, useUpdateAdminUserMutation,
 } from "../../api/adminApi";
 import FormCard from "../../components/FormCard";
+import FormTextField from "../../components/FormTextField";
 import { selectCurrentUser } from "../../features/auth/authSlice";
 import { getErrorMessage } from "../../utils/errors";
 
@@ -17,17 +19,16 @@ export default function AdminUsersPage() {
   const [updateUser] = useUpdateAdminUserMutation();
   const [deleteUser] = useDeleteAdminUserMutation();
 
-  const [editing, setEditing] = useState(null); // користувач, якого редагуємо
+  const [editing, setEditing] = useState(null);
   const [error, setError] = useState("");
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: { first_name: "", last_name: "", email: "", role: "user" },
+  });
 
-  const handleChange = (e) => setEditing({ ...editing, [e.target.name]: e.target.value });
-
-  const handleSave = async (e) => {
-    e.preventDefault();
+  const onSave = async ({ first_name, last_name, email, role }) => {
     setError("");
-    const { id, first_name, last_name, email, role } = editing;
     try {
-      await updateUser({ id, first_name, last_name, email, role }).unwrap();
+      await updateUser({ id: editing.id, first_name, last_name, email, role }).unwrap();
       setEditing(null);
     } catch (err) {
       setError(getErrorMessage(err));
@@ -51,14 +52,36 @@ export default function AdminUsersPage() {
       {!editing && error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
       {editing && (
-        <FormCard title={`Редагування #${editing.id}`} error={error} onSubmit={handleSave}>
-          <TextField name="first_name" label="Ім'я" value={editing.first_name} onChange={handleChange} required />
-          <TextField name="last_name" label="Прізвище" value={editing.last_name} onChange={handleChange} required />
-          <TextField name="email" type="email" label="Email" value={editing.email} onChange={handleChange} required />
-          <TextField name="role" label="Роль" value={editing.role} onChange={handleChange} select>
+        <FormCard title={`Редагування #${editing.id}`} error={error} onSubmit={handleSubmit(onSave)}>
+          <FormTextField
+            control={control}
+            name="first_name"
+            label="Ім'я"
+            rules={{ required: "Введіть ім'я" }}
+          />
+          <FormTextField
+            control={control}
+            name="last_name"
+            label="Прізвище"
+            rules={{ required: "Введіть прізвище" }}
+          />
+          <FormTextField
+            control={control}
+            name="email"
+            type="email"
+            label="Email"
+            rules={{ required: "Введіть email" }}
+          />
+          <FormTextField
+            control={control}
+            name="role"
+            label="Роль"
+            select
+            rules={{ required: "Оберіть роль" }}
+          >
             <MenuItem value="user">user</MenuItem>
             <MenuItem value="admin">admin</MenuItem>
-          </TextField>
+          </FormTextField>
           <Stack direction="row" spacing={1}>
             <Button type="submit" variant="contained">Зберегти</Button>
             <Button onClick={() => setEditing(null)}>Скасувати</Button>
@@ -86,7 +109,21 @@ export default function AdminUsersPage() {
                 <TableCell>{u.role}</TableCell>
                 <TableCell>
                   <Stack direction="row" spacing={1}>
-                    <Button size="small" onClick={() => setEditing(u)}>Редагувати</Button>
+                    <Button
+                      size="small"
+                      onClick={() => {
+                        setEditing(u);
+                        setError("");
+                        reset({
+                          first_name: u.first_name,
+                          last_name: u.last_name,
+                          email: u.email,
+                          role: u.role,
+                        });
+                      }}
+                    >
+                      Редагувати
+                    </Button>
                     {u.id !== currentUser.id && (
                       <Button size="small" color="error" onClick={() => handleDelete(u.id)}>Видалити</Button>
                     )}
