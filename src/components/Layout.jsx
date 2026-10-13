@@ -70,7 +70,7 @@ export default function Layout() {
         </Toolbar>
       </AppBar>
 
-      <Container sx={{ py: 3 }}>
+      <Container sx={{ py: 3, height: "calc(100% - 64px)" }}>
         <Outlet />
       </Container>
     </>

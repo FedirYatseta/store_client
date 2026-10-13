@@ -11,6 +11,7 @@ import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import AdminItemsPage from "./pages/admin/AdminItemsPage";
 import AdminUsersPage from "./pages/admin/AdminUsersPage";
+import "./theme/global.css";
 
 export default function App() {
   useRestoreSession();
