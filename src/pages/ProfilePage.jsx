@@ -33,43 +33,43 @@ export default function ProfilePage() {
       const updated = await updateProfile(payload).unwrap();
       dispatch(setUser(updated));
       reset({ ...form, password: "" });
-      setSuccess("Збережено");
+      setSuccess("Changes saved");
     } catch (err) {
       setError(getErrorMessage(err));
     }
   };
 
   return (
-    <FormCard title="Мій профіль" error={error} success={success} onSubmit={handleSubmit(onSubmit)}>
+    <FormCard title="My profile" error={error} success={success} onSubmit={handleSubmit(onSubmit)}>
       <FormTextField
         control={control}
         name="first_name"
-        label="Ім'я"
-        rules={{ required: "Введіть ім'я" }}
+        label="First name"
+        rules={{ required: "First name is required" }}
       />
       <FormTextField
         control={control}
         name="last_name"
-        label="Прізвище"
-        rules={{ required: "Введіть прізвище" }}
+        label="Last name"
+        rules={{ required: "Last name is required" }}
       />
       <FormTextField
         control={control}
         name="email"
         type="email"
         label="Email"
-        rules={{ required: "Введіть email" }}
+        rules={{ required: "Email is required" }}
       />
       <FormTextField
         control={control}
         name="password"
         type="password"
-        label="Новий пароль (необов'язково)"
+        label="New password (optional)"
         rules={{
-          minLength: { value: 6, message: "Пароль має містити щонайменше 6 символів" },
+          minLength: { value: 6, message: "Password must be at least 6 characters" },
         }}
       />
-      <Button type="submit" variant="contained" disabled={isLoading}>Зберегти</Button>
+      <Button type="submit" variant="contained" disabled={isLoading}>Save changes</Button>
     </FormCard>
   );
 }

@@ -31,22 +31,22 @@ export default function LoginPage() {
   };
 
   return (
-    <FormCard title="Вхід" error={error} onSubmit={handleSubmit(onSubmit)}>
+    <FormCard title="Sign in" error={error} onSubmit={handleSubmit(onSubmit)}>
       <FormTextField
         control={control}
         name="email"
         type="email"
         label="Email"
-        rules={{ required: "Введіть email" }}
+        rules={{ required: "Email is required" }}
       />
       <FormTextField
         control={control}
         name="password"
         type="password"
-        label="Пароль"
-        rules={{ required: "Введіть пароль" }}
+        label="Password"
+        rules={{ required: "Password is required" }}
       />
-      <Button type="submit" variant="contained" disabled={isLoading}>Увійти</Button>
+      <Button type="submit" variant="contained" disabled={isLoading}>Sign in</Button>
     </FormCard>
   );
 }

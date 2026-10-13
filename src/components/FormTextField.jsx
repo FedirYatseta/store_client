@@ -3,7 +3,7 @@ import { TextField } from "@mui/material";
 
 const EMAIL_RULE = {
   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  message: "Введіть коректний email",
+  message: "Enter a valid email address",
 };
 
 export default function FormTextField({ control, name, rules, type, children, ...props }) {

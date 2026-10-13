@@ -4,5 +4,5 @@ export function getErrorMessage(error) {
   if (data?.errors) return data.errors.join(", ");
   if (data?.error) return data.error;
   if (data?.message) return data.message;
-  return "Сталася помилка. Спробуйте ще раз.";
+  return "An error occurred. Please try again.";
 }

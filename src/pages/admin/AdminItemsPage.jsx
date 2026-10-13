@@ -47,7 +47,7 @@ export default function AdminItemsPage() {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Видалити товар?")) return;
+    if (!confirm("Delete this item?")) return;
     setError("");
     try {
       await deleteItem(id).unwrap();
@@ -58,24 +58,24 @@ export default function AdminItemsPage() {
 
   return (
     <>
-      <Typography variant="h4" gutterBottom>Товари</Typography>
+      <Typography variant="h4" gutterBottom>Items</Typography>
       {loadError && <Alert severity="error" sx={{ mb: 2 }}>{getErrorMessage(loadError)}</Alert>}
 
       <FormCard
-        title={editingId ? `Редагування #${editingId}` : "Новий товар"}
+        title={editingId ? `Edit item #${editingId}` : "New item"}
         error={error}
         onSubmit={handleSubmit(onSubmit)}
       >
         <FormTextField
           control={control}
           name="name"
-          label="Назва"
-          rules={{ required: "Введіть назву товару" }}
+          label="Name"
+          rules={{ required: "Item name is required" }}
         />
         <FormTextField
           control={control}
           name="description"
-          label="Опис"
+          label="Description"
           multiline
           minRows={2}
         />
@@ -83,16 +83,16 @@ export default function AdminItemsPage() {
           control={control}
           name="price"
           type="number"
-          label="Ціна"
+          label="Price"
           slotProps={{ htmlInput: { step: "0.01", min: 0 } }}
           rules={{
-            required: "Введіть ціну",
-            min: { value: 0, message: "Ціна не може бути від'ємною" },
+            required: "Price is required",
+            min: { value: 0, message: "Price cannot be negative" },
           }}
         />
         <Stack direction="row" spacing={1}>
-          <Button type="submit" variant="contained">{editingId ? "Зберегти" : "Створити"}</Button>
-          {editingId && <Button onClick={resetForm}>Скасувати</Button>}
+          <Button type="submit" variant="contained">{editingId ? "Save" : "Create"}</Button>
+          {editingId && <Button onClick={resetForm}>Cancel</Button>}
         </Stack>
       </FormCard>
 
@@ -101,9 +101,9 @@ export default function AdminItemsPage() {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Назва</TableCell>
-              <TableCell>Опис</TableCell>
-              <TableCell>Ціна</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Price</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
@@ -116,8 +116,8 @@ export default function AdminItemsPage() {
                 <TableCell>{formatPrice(item.price)}</TableCell>
                 <TableCell>
                   <Stack direction="row" spacing={1}>
-                    <Button size="small" onClick={() => handleEdit(item)}>Редагувати</Button>
-                    <Button size="small" color="error" onClick={() => handleDelete(item.id)}>Видалити</Button>
+                    <Button size="small" onClick={() => handleEdit(item)}>Edit</Button>
+                    <Button size="small" color="error" onClick={() => handleDelete(item.id)}>Delete</Button>
                   </Stack>
                 </TableCell>
               </TableRow>

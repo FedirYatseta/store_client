@@ -20,44 +20,44 @@ export default function RegisterPage() {
     setError("");
     try {
       await signup(form).unwrap();
-      navigate(ROUTES.login); 
+      navigate(ROUTES.login);
     } catch (err) {
       setError(getErrorMessage(err));
     }
   };
 
   return (
-    <FormCard title="Реєстрація" error={error} onSubmit={handleSubmit(onSubmit)}>
+    <FormCard title="Sign up" error={error} onSubmit={handleSubmit(onSubmit)}>
       <FormTextField
         control={control}
         name="first_name"
-        label="Ім'я"
-        rules={{ required: "Введіть ім'я" }}
+        label="First name"
+        rules={{ required: "First name is required" }}
       />
       <FormTextField
         control={control}
         name="last_name"
-        label="Прізвище"
-        rules={{ required: "Введіть прізвище" }}
+        label="Last name"
+        rules={{ required: "Last name is required" }}
       />
       <FormTextField
         control={control}
         name="email"
         type="email"
         label="Email"
-        rules={{ required: "Введіть email" }}
+        rules={{ required: "Email is required" }}
       />
       <FormTextField
         control={control}
         name="password"
         type="password"
-        label="Пароль (мін. 6 символів)"
+        label="Password (at least 6 characters)"
         rules={{
-          required: "Введіть пароль",
-          minLength: { value: 6, message: "Пароль має містити щонайменше 6 символів" },
+          required: "Password is required",
+          minLength: { value: 6, message: "Password must be at least 6 characters" },
         }}
       />
-      <Button type="submit" variant="contained" disabled={isLoading}>Зареєструватися</Button>
+      <Button type="submit" variant="contained" disabled={isLoading}>Create account</Button>
     </FormCard>
   );
 }

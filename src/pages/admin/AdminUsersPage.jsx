@@ -36,7 +36,7 @@ export default function AdminUsersPage() {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Видалити користувача разом із його замовленнями?")) return;
+    if (!confirm("Delete this user and their orders?")) return;
     setError("");
     try {
       await deleteUser(id).unwrap();
@@ -47,44 +47,44 @@ export default function AdminUsersPage() {
 
   return (
     <>
-      <Typography variant="h4" gutterBottom>Користувачі</Typography>
+      <Typography variant="h4" gutterBottom>Users</Typography>
       {loadError && <Alert severity="error" sx={{ mb: 2 }}>{getErrorMessage(loadError)}</Alert>}
       {!editing && error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
       {editing && (
-        <FormCard title={`Редагування #${editing.id}`} error={error} onSubmit={handleSubmit(onSave)}>
+        <FormCard title={`Edit user #${editing.id}`} error={error} onSubmit={handleSubmit(onSave)}>
           <FormTextField
             control={control}
             name="first_name"
-            label="Ім'я"
-            rules={{ required: "Введіть ім'я" }}
+            label="First name"
+            rules={{ required: "First name is required" }}
           />
           <FormTextField
             control={control}
             name="last_name"
-            label="Прізвище"
-            rules={{ required: "Введіть прізвище" }}
+            label="Last name"
+            rules={{ required: "Last name is required" }}
           />
           <FormTextField
             control={control}
             name="email"
             type="email"
             label="Email"
-            rules={{ required: "Введіть email" }}
+            rules={{ required: "Email is required" }}
           />
           <FormTextField
             control={control}
             name="role"
-            label="Роль"
+            label="Role"
             select
-            rules={{ required: "Оберіть роль" }}
+            rules={{ required: "Select a role" }}
           >
             <MenuItem value="user">user</MenuItem>
             <MenuItem value="admin">admin</MenuItem>
           </FormTextField>
           <Stack direction="row" spacing={1}>
-            <Button type="submit" variant="contained">Зберегти</Button>
-            <Button onClick={() => setEditing(null)}>Скасувати</Button>
+            <Button type="submit" variant="contained">Save</Button>
+            <Button onClick={() => setEditing(null)}>Cancel</Button>
           </Stack>
         </FormCard>
       )}
@@ -94,9 +94,9 @@ export default function AdminUsersPage() {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Ім'я</TableCell>
+              <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Роль</TableCell>
+              <TableCell>Role</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
@@ -122,10 +122,10 @@ export default function AdminUsersPage() {
                         });
                       }}
                     >
-                      Редагувати
+                      Edit
                     </Button>
                     {u.id !== currentUser.id && (
-                      <Button size="small" color="error" onClick={() => handleDelete(u.id)}>Видалити</Button>
+                      <Button size="small" color="error" onClick={() => handleDelete(u.id)}>Delete</Button>
                     )}
                   </Stack>
                 </TableCell>
