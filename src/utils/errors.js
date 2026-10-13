@@ -1,4 +1,4 @@
-// Дістає читабельне повідомлення з помилки RTK Query (формат відповідей Rails)
+// Extracts a readable message from an RTK Query error (Rails response format).
 export function getErrorMessage(error) {
   const data = error?.data;
   if (data?.errors) return data.errors.join(", ");

@@ -8,7 +8,7 @@ export const adminApi = baseApi.injectEndpoints({
     }),
     createAdminItem: build.mutation({
       query: (item) => ({ url: "/admin/items", method: "POST", body: { item } }),
-      invalidatesTags: ["AdminItem", "Item"], // "Item" оновлює і публічний каталог
+      invalidatesTags: ["AdminItem", "Item"], // "Item" also refreshes the public catalog.
     }),
     updateAdminItem: build.mutation({
       query: ({ id, ...item }) => ({ url: `/admin/items/${id}`, method: "PATCH", body: { item } }),

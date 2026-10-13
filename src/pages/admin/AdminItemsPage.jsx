@@ -52,7 +52,7 @@ export default function AdminItemsPage() {
     try {
       await deleteItem(id).unwrap();
     } catch (err) {
-      setError(getErrorMessage(err)); // напр. товар вже є в замовленнях
+      setError(getErrorMessage(err)); // For example, the item may already be in an order.
     }
   };
 

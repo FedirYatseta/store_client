@@ -12,10 +12,10 @@ export function useLogout() {
     try {
       await logoutRequest().unwrap();
     } catch {
-      /* токен міг уже протухнути: все одно виходимо локально */
+      /* The token may already have expired; log out locally anyway. */
     }
     dispatch(clearCredentials());
     dispatch(clearCart());
-    dispatch(baseApi.util.resetApiState()); // скидаємо кеш, щоб наступний користувач не бачив чужі дані
+    dispatch(baseApi.util.resetApiState()); // Clear the cache so the next user cannot see someone else's data.
   };
 }

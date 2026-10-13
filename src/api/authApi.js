@@ -4,7 +4,7 @@ export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     login: build.mutation({
       query: (user) => ({ url: "/login", method: "POST", body: { user } }),
-      // Devise JWT віддає токен у заголовку, а не в тілі відповіді
+      // Devise JWT returns the token in a header, not in the response body.
       transformResponse: (response, meta) => ({
         user: response.user,
         token: meta.response.headers.get("Authorization"),

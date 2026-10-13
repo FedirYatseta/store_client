@@ -11,7 +11,7 @@ export default function ProtectedRoute({ adminOnly = false }) {
 
   if (!token) return <Navigate to={ROUTES.login} replace />;
 
-  // Токен є, профіль ще вантажиться (після перезавантаження сторінки)
+  // The token exists, but the profile is still loading after a page reload.
   if (!user) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>

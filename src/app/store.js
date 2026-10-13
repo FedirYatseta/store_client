@@ -12,7 +12,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
 });
 
-// Зберігаємо токен і кошик між перезавантаженнями сторінки
+// Persist the token and cart across page reloads.
 store.subscribe(() => {
   const { auth, cart } = store.getState();
   try {
@@ -20,6 +20,6 @@ store.subscribe(() => {
     else localStorage.removeItem(TOKEN_KEY);
     localStorage.setItem(CART_KEY, JSON.stringify(cart.lines));
   } catch {
-    /* localStorage недоступний, не критично */
+    /* localStorage is unavailable; this is not critical. */
   }
 });

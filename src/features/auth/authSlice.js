@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const TOKEN_KEY = "token";
 
 const initialState = {
-  token: localStorage.getItem(TOKEN_KEY), // відновлюємо сесію після перезавантаження
+  token: localStorage.getItem(TOKEN_KEY), // Restore the session after a page reload.
   user: null,
 };
 

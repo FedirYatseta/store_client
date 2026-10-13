@@ -24,7 +24,7 @@ export default function CartPage() {
   const handlePay = async () => {
     setError("");
     try {
-      // На сервер йдуть лише id і кількість: суму там рахують з актуальних цін
+      // Send only IDs and quantities; the server calculates totals using current prices.
       await createOrder(lines.map((l) => ({ item_id: l.item.id, quantity: l.quantity }))).unwrap();
       dispatch(clearCart());
       navigate(ROUTES.orders);

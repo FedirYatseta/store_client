@@ -20,7 +20,7 @@ export default function RegisterPage() {
     setError("");
     try {
       await signup(form).unwrap();
-      navigate(ROUTES.login); // токен видається лише після входу
+      navigate(ROUTES.login); 
     } catch (err) {
       setError(getErrorMessage(err));
     }

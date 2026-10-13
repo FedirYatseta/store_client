@@ -26,7 +26,7 @@ export default function ProfilePage() {
   const onSubmit = async (form) => {
     setSuccess("");
     setError("");
-    // Порожній пароль не відправляємо, щоб не перезаписати існуючий
+    // Omit an empty password to avoid overwriting the existing one.
     const payload = { ...form };
     if (!payload.password) delete payload.password;
     try {
