@@ -1,14 +1,15 @@
 import { Box, CircularProgress } from "@mui/material";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { ROUTES } from "../app/routes";
 import { selectCurrentUser, selectIsAdmin, selectToken } from "../features/auth/authSlice";
 
-export default function ProtectedRoute({ children, adminOnly = false }) {
+export default function ProtectedRoute({ adminOnly = false }) {
   const token = useSelector(selectToken);
   const user = useSelector(selectCurrentUser);
   const isAdmin = useSelector(selectIsAdmin);
 
-  if (!token) return <Navigate to="/login" replace />;
+  if (!token) return <Navigate to={ROUTES.login} replace />;
 
   // Токен є, профіль ще вантажиться (після перезавантаження сторінки)
   if (!user) {
@@ -19,6 +20,6 @@ export default function ProtectedRoute({ children, adminOnly = false }) {
     );
   }
 
-  if (adminOnly && !isAdmin) return <Navigate to="/" replace />;
-  return children;
+  if (adminOnly && !isAdmin) return <Navigate to={ROUTES.catalog} replace />;
+  return <Outlet />;
 }

@@ -2,6 +2,7 @@ import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSignupMutation } from "../api/authApi";
+import { ROUTES } from "../app/routes";
 import FormCard from "../components/FormCard";
 import { getErrorMessage } from "../utils/errors";
 
@@ -18,7 +19,7 @@ export default function RegisterPage() {
     setError("");
     try {
       await signup(form).unwrap();
-      navigate("/login"); // токен видається лише на /login
+      navigate(ROUTES.login); // токен видається лише після входу
     } catch (err) {
       setError(getErrorMessage(err));
     }

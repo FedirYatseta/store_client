@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../api/authApi";
+import { ROUTES } from "../app/routes";
 import FormCard from "../components/FormCard";
 import { setCredentials } from "../features/auth/authSlice";
 import { getErrorMessage } from "../utils/errors";
@@ -22,7 +23,7 @@ export default function LoginPage() {
     try {
       const credentials = await login(form).unwrap();
       dispatch(setCredentials(credentials));
-      navigate("/");
+      navigate(ROUTES.catalog);
     } catch (err) {
       setError(getErrorMessage(err));
     }

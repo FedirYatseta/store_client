@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { ROUTES } from "./app/routes";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useRestoreSession } from "./features/auth/useRestoreSession";
@@ -17,16 +18,20 @@ export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route path={ROUTES.login} element={<LoginPage />} />
+        <Route path={ROUTES.register} element={<RegisterPage />} />
 
-        <Route path="/" element={<ProtectedRoute><CatalogPage /></ProtectedRoute>} />
-        <Route path="/cart" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
-        <Route path="/orders" element={<ProtectedRoute><OrdersPage /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route element={<ProtectedRoute />}>
+          <Route index element={<CatalogPage />} />
+          <Route path={ROUTES.cart} element={<CartPage />} />
+          <Route path={ROUTES.orders} element={<OrdersPage />} />
+          <Route path={ROUTES.profile} element={<ProfilePage />} />
 
-        <Route path="/admin/items" element={<ProtectedRoute adminOnly><AdminItemsPage /></ProtectedRoute>} />
-        <Route path="/admin/users" element={<ProtectedRoute adminOnly><AdminUsersPage /></ProtectedRoute>} />
+          <Route element={<ProtectedRoute adminOnly />}>
+            <Route path={ROUTES.adminItems} element={<AdminItemsPage />} />
+            <Route path={ROUTES.adminUsers} element={<AdminUsersPage />} />
+          </Route>
+        </Route>
       </Route>
     </Routes>
   );

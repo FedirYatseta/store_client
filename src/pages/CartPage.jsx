@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCreateOrderMutation } from "../api/ordersApi";
+import { ROUTES } from "../app/routes";
 import {
   clearCart, removeItem, selectCartLines, selectCartTotal, setQuantity,
 } from "../features/cart/cartSlice";
@@ -26,7 +27,7 @@ export default function CartPage() {
       // На сервер йдуть лише id і кількість: суму там рахують з актуальних цін
       await createOrder(lines.map((l) => ({ item_id: l.item.id, quantity: l.quantity }))).unwrap();
       dispatch(clearCart());
-      navigate("/orders");
+      navigate(ROUTES.orders);
     } catch (err) {
       setError(getErrorMessage(err));
     }
