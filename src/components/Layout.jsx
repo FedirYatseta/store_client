@@ -37,19 +37,19 @@ export default function Layout() {
 
           {user && (
             <>
-              <NavButton to={ROUTES.catalog}>Каталог</NavButton>
+              <NavButton to={ROUTES.catalog}>Catalog</NavButton>
               <NavButton to={ROUTES.cart}>
                 <Badge badgeContent={cartCount} color="secondary" sx={{ mr: 1 }}>
                   <ShoppingCartIcon />
                 </Badge>
-                Кошик
+                Cart
               </NavButton>
-              <NavButton to={ROUTES.orders}>Мої замовлення</NavButton>
-              <NavButton to={ROUTES.profile}>Профіль</NavButton>
+              <NavButton to={ROUTES.orders}>My orders</NavButton>
+              <NavButton to={ROUTES.profile}>Profile</NavButton>
               {isAdmin && (
                 <>
-                  <NavButton to={ROUTES.adminItems}>Товари (адмін)</NavButton>
-                  <NavButton to={ROUTES.adminUsers}>Користувачі (адмін)</NavButton>
+                  <NavButton to={ROUTES.adminItems}>Items (admin)</NavButton>
+                  <NavButton to={ROUTES.adminUsers}>Users (admin)</NavButton>
                 </>
               )}
             </>
@@ -59,12 +59,12 @@ export default function Layout() {
 
           {user ? (
             <Button color="inherit" onClick={handleLogout}>
-              Вийти ({user.first_name})
+              Sign out ({user.first_name})
             </Button>
           ) : (
             <>
-              <NavButton to={ROUTES.login}>Вхід</NavButton>
-              <NavButton to={ROUTES.register}>Реєстрація</NavButton>
+              <NavButton to={ROUTES.login}>Sign in</NavButton>
+              <NavButton to={ROUTES.register}>Sign up</NavButton>
             </>
           )}
         </Toolbar>
