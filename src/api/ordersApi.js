@@ -13,7 +13,7 @@ export const ordersApi = baseApi.injectEndpoints({
     // lines: [{ item_id, quantity }]
     createOrder: build.mutation({
       query: (lines) => ({ url: "/orders", method: "POST", body: { items: lines } }),
-      invalidatesTags: ["Order"], // список замовлень оновиться сам
+      invalidatesTags: ["Order"], // The order list refreshes automatically.
     }),
   }),
 });

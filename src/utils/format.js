@@ -1,4 +1,4 @@
 export const formatPrice = (value) =>
-  new Intl.NumberFormat("uk-UA", { style: "currency", currency: "USD" }).format(Number(value));
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(Number(value));
 
-export const formatDate = (iso) => new Date(iso).toLocaleString("uk-UA");
+export const formatDate = (iso) => new Date(iso).toLocaleString("en-US");

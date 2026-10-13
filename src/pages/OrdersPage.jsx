@@ -16,7 +16,7 @@ function OrderAccordion({ order }) {
     <Accordion expanded={expanded} onChange={(_, isExpanded) => setExpanded(isExpanded)}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography sx={{ flexGrow: 1 }}>
-          Замовлення #{order.id} від {formatDate(order.created_at)}
+          Order #{order.id} placed on {formatDate(order.created_at)}
         </Typography>
         <Typography fontWeight="bold" sx={{ mr: 2 }}>{formatPrice(order.amount)}</Typography>
       </AccordionSummary>
@@ -27,10 +27,10 @@ function OrderAccordion({ order }) {
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>Товар</TableCell>
-                <TableCell>Ціна</TableCell>
-                <TableCell>Кількість</TableCell>
-                <TableCell>Сума</TableCell>
+                <TableCell>Item</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>Quantity</TableCell>
+                <TableCell>Total</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -58,8 +58,8 @@ export default function OrdersPage() {
 
   return (
     <>
-      <Typography variant="h4" gutterBottom>Мої замовлення</Typography>
-      {orders.length === 0 && <Typography>Замовлень ще немає.</Typography>}
+      <Typography variant="h4" gutterBottom>My orders</Typography>
+      {orders.length === 0 && <Typography>You have no orders yet.</Typography>}
       {orders.map((order) => <OrderAccordion key={order.id} order={order} />)}
     </>
   );

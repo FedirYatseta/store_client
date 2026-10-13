@@ -33,21 +33,21 @@ export default function CartPage() {
     }
   };
 
-  if (lines.length === 0) return <Typography>Кошик порожній.</Typography>;
+  if (lines.length === 0) return <Typography>Your cart is empty.</Typography>;
 
   return (
     <>
-      <Typography variant="h4" gutterBottom>Кошик</Typography>
+      <Typography variant="h4" gutterBottom>Cart</Typography>
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
       <TableContainer component={Paper} sx={{ mb: 2 }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Товар</TableCell>
-              <TableCell>Ціна</TableCell>
-              <TableCell>Кількість</TableCell>
-              <TableCell>Сума</TableCell>
+              <TableCell>Item</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>Quantity</TableCell>
+              <TableCell>Total</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
@@ -70,7 +70,7 @@ export default function CartPage() {
                 </TableCell>
                 <TableCell>{formatPrice(Number(item.price) * quantity)}</TableCell>
                 <TableCell>
-                  <Button color="error" onClick={() => dispatch(removeItem(item.id))}>Видалити</Button>
+                  <Button color="error" onClick={() => dispatch(removeItem(item.id))}>Remove</Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -78,9 +78,9 @@ export default function CartPage() {
         </Table>
       </TableContainer>
 
-      <Typography variant="h6" sx={{ mb: 2 }}>Разом: {formatPrice(total)}</Typography>
+      <Typography variant="h6" sx={{ mb: 2 }}>Total: {formatPrice(total)}</Typography>
       <Button variant="contained" onClick={handlePay} disabled={isLoading}>
-        {isLoading ? "Обробка..." : "Оплатити"}
+        {isLoading ? "Processing..." : "Place order"}
       </Button>
     </>
   );

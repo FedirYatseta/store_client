@@ -30,7 +30,7 @@ function ItemCard({ item }) {
           sx={{ width: 90 }}
         />
         <Button variant="contained" onClick={() => dispatch(addItem({ item, quantity }))}>
-          В кошик
+          Add to cart
         </Button>
       </CardActions>
     </Card>
@@ -39,15 +39,15 @@ function ItemCard({ item }) {
 
 export default function CatalogPage() {
   const [query, setQuery] = useState("");
-  const debouncedQuery = useDebounce(query); // не шлемо запит на кожну літеру
+  const debouncedQuery = useDebounce(query); // Avoid sending a request for every keystroke.
   const { data: items = [], isFetching, error } = useGetItemsQuery(debouncedQuery);
 
   return (
     <>
-      <Typography variant="h4" gutterBottom>Каталог</Typography>
+      <Typography variant="h4" gutterBottom>Catalog</Typography>
       <TextField
         fullWidth
-        label="Пошук за назвою або описом"
+        label="Search by name or description"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         sx={{ mb: 2 }}
@@ -58,7 +58,7 @@ export default function CatalogPage() {
       <Box sx={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 2 }}>
         {items.map((item) => <ItemCard key={item.id} item={item} />)}
       </Box>
-      {!isFetching && items.length === 0 && <Typography>Нічого не знайдено.</Typography>}
+      {!isFetching && items.length === 0 && <Typography>No items found.</Typography>}
     </>
   );
 }
