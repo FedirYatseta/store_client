@@ -6,14 +6,7 @@ import { ROUTES } from "../app/routes";
 import { selectCurrentUser, selectIsAdmin } from "../features/auth/authSlice";
 import { useLogout } from "../features/auth/useLogout";
 import { selectCartCount } from "../features/cart/cartSlice";
-
-function NavButton({ to, children, ...props }) {
-  return (
-    <Button color="inherit" component={RouterLink} to={to} {...props}>
-      {children}
-    </Button>
-  );
-}
+import NavButton from "./NavButton";
 
 export default function Layout() {
   const user = useSelector(selectCurrentUser);
