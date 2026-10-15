@@ -1,5 +1,7 @@
 import { Controller } from "react-hook-form";
-import { TextField } from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 
 const EMAIL_RULE = {
   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -7,6 +9,7 @@ const EMAIL_RULE = {
 };
 
 export default function FormTextField({ control, name, rules, type, children, ...props }) {
+  const [showPassword, setShowPassword] = useState(false);
   const validationRules = type === "email"
     ? { ...rules, pattern: rules?.pattern ?? EMAIL_RULE }
     : rules;
@@ -23,10 +26,27 @@ export default function FormTextField({ control, name, rules, type, children, ..
           <TextField
             {...props}
             {...fieldProps}
-            type={type}
+            type={type === "password" && showPassword ? "text" : type}
             inputRef={ref}
             error={Boolean(fieldState.error)}
             helperText={fieldState.error?.message}
+            slotProps={{
+              input: {
+                endAdornment: type === "password" && (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      aria-pressed={showPassword}
+                      edge="end"
+                      onClick={() => setShowPassword((visible) => !visible)}
+                      onMouseDown={(event) => event.preventDefault()}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              },
+            }}
           >
             {children}
           </TextField>
